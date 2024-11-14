@@ -81,9 +81,6 @@ def global_search(query):
         entities=entities,  # default to None if you don't want to use community weights for ranking
         token_encoder=token_encoder,
     )
-
-
-
     search_engine = GlobalSearch(
         llm=llm,
         context_builder=context_builder,
@@ -111,3 +108,11 @@ def global_search(query):
 
 if __name__ == "__main__":
     global_search("What is racism?")
+
+
+
+
+
+
+
+

@@ -80,6 +80,7 @@ class RAG:
     def indexing(self):
         print("start indexing")
         os.system(f"python -m graphrag.index --root {self.address}")
+        """
         output_dir = os.path.join(self.address, "output")
         result_dir = os.path.join(self.address, "result")
         # 找出 output 資料夾內唯一的子資料夾
@@ -98,9 +99,10 @@ class RAG:
             print(f"已刪除原始的資料夾: {output_dir}")
         else:
             print(f"子資料夾數量不唯一，找到的子資料夾：{subfolders}")
+        """
 
     def global_search(self, query):
-        result_address = f"{self.address}/result/artifacts"
+        result_address = f"{self.address}/output"
         entity_df = pd.read_parquet(f"{result_address}/{ENTITY_TABLE}.parquet")
         report_df = pd.read_parquet(f"{result_address}/{COMMUNITY_REPORT_TABLE}.parquet")
         entity_embedding_df = pd.read_parquet(f"{result_address}/{ENTITY_EMBEDDING_TABLE}.parquet")
