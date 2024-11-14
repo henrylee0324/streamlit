@@ -80,6 +80,7 @@ class RAG:
     def indexing(self):
         print("start indexing")
         os.system(f"python -m graphrag.index --root {self.address}")
+        print("indexing over")
         """
         output_dir = os.path.join(self.address, "output")
         result_dir = os.path.join(self.address, "result")
@@ -102,6 +103,7 @@ class RAG:
         """
 
     def global_search(self, query):
+        print(f"start global search: {query}")
         result_address = f"{self.address}/output"
         entity_df = pd.read_parquet(f"{result_address}/{ENTITY_TABLE}.parquet")
         report_df = pd.read_parquet(f"{result_address}/{COMMUNITY_REPORT_TABLE}.parquet")
@@ -146,7 +148,7 @@ if __name__ == "__main__":
     print("請將文件放入 input 資料夾中，按下 Enter 鍵以繼續...")
     input()  
     test.indexing()
-    test.global_search("What President Trump has done?")
+    test.global_search("What happened to Chinese?")
 
 
 

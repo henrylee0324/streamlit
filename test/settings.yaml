@@ -22,7 +22,7 @@ embed_graph:
 embeddings:
   async_mode: threaded
   llm:
-    api_key: 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
+    api_key: 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
     model: text-embedding-3-small
     type: openai_embedding
 encoding_model: cl100k_base
@@ -42,7 +42,7 @@ input:
   file_type: text
   type: file
 llm:
-  api_key: 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
+  api_key: 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
   model: gpt-4o-mini
   model_supports_json: true
   type: openai_chat
