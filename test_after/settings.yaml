@@ -22,7 +22,7 @@ embed_graph:
 embeddings:
   async_mode: threaded
   llm:
-    api_key: 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
+    api_key: 
     model: text-embedding-3-small
     type: openai_embedding
 encoding_model: cl100k_base
@@ -42,7 +42,7 @@ input:
   file_type: text
   type: file
 llm:
-  api_key: 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
+  api_key: 
   model: gpt-4o-mini
   model_supports_json: true
   type: openai_chat
