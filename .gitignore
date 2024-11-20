@@ -1,0 +1,12 @@
+# 忽略所有的 .log 文件
+*.log
+
+# 忽略某個目錄
+/temp/
+
+# 忽略根目錄中的 config.json 文件
+/config.json
+
+# 忽略所有 .env 文件
+*.env
+
