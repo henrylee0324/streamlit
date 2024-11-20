@@ -11,7 +11,8 @@ from graphrag.query.structured_search.global_search.community_context import (
 )
 from graphrag.query.structured_search.global_search.search import GlobalSearch
 from dotenv import load_dotenv
-from compare import compare_responses
+
+load_dotenv()
 
 # 讀取環境變量
 api_key = os.getenv("GRAPHRAG_API_KEY")
@@ -35,7 +36,7 @@ ENTITY_EMBEDDING_TABLE = "create_final_entities"
 
 # community level in the Leiden community hierarchy from which we will load the community reports
 # higher value means we use reports from more fine-grained communities (at the cost of higher computation cost)
-COMMUNITY_LEVEL = 3
+COMMUNITY_LEVEL = 2
 context_builder_params = {
     "use_community_summary": False,  # False means using full community reports. True means using community short summaries.
     "shuffle_data": True,
@@ -80,6 +81,26 @@ class RAG:
         print("start indexing")
         os.system(f"python -m graphrag.index --root {self.address}")
         print("indexing over")
+        """
+        output_dir = os.path.join(self.address, "output")
+        result_dir = os.path.join(self.address, "result")
+        # 找出 output 資料夾內唯一的子資料夾
+        subfolders = [f.path for f in os.scandir(output_dir) if f.is_dir()]
+        if len(subfolders) == 1:
+            unique_subfolder = subfolders[0]
+            # 如果已存在 result 資料夾，先刪除
+            if os.path.exists(result_dir):
+                shutil.rmtree(result_dir)
+                print(f"已刪除原本存在的資料夾: {result_dir}")
+            # 移動子資料夾並重命名為 result
+            shutil.move(unique_subfolder, result_dir)
+            print(f"已將子資料夾重新命名並移動為: {result_dir}")
+            # 刪除 output 資料夾
+            shutil.rmtree(output_dir)
+            print(f"已刪除原始的資料夾: {output_dir}")
+        else:
+            print(f"子資料夾數量不唯一，找到的子資料夾：{subfolders}")
+        """
 
     def global_search(self, query):
         print(f"start global search: {query}")
@@ -111,7 +132,7 @@ class RAG:
             json_mode=True,  # set this to False if your LLM model does not support JSON mode.
             context_builder_params=context_builder_params,
             concurrent_coroutines=32,
-            response_type="prioritized list",  # free form text describing the response type and format, can be anything, e.g. prioritized list, single paragraph, multiple paragraphs, multiple-page report
+            response_type="multiple paragraphs",  # free form text describing the response type and format, can be anything, e.g. prioritized list, single paragraph, multiple paragraphs, multiple-page report
         )
         result = search_engine.search(query)
         print(result.response)
@@ -122,19 +143,13 @@ class RAG:
         return result.response
 
 if __name__ == "__main__":
-    article_before = RAG('./test_before')
-    article_after = RAG('./test_after')
-    print("----------------- Welcome to InsightLink -----------------")
-    question = input("> What question do you want to ask about each dataset? \n")
-    response_before = article_before.global_search(question)
-    response_after = article_after.global_search(question)
-    print('Response to the question (Before 2021/03/16)')
-    print(response_before)
-    print('Response to the question (After 2021/03/16)')
-    print(response_after)
-    print('Comparison Result')
-    comparison_response = compare_responses(question, response_before, response_after)
-    print(comparison_response)
+    test = RAG('./test')
+    test.setting()
+    print("請將文件放入 input 資料夾中，按下 Enter 鍵以繼續...")
+    input()  
+    test.indexing()
+    test.global_search("What happened to Chinese?")
+
 
 
 
