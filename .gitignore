@@ -6,4 +6,4 @@
 /__pycache__
 
 # 忽略所有 .env 文件
-*.env
+.env

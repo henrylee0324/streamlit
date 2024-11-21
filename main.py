@@ -91,7 +91,7 @@ st.title("本地 LLM 應用")
 folder_path_1 = st.text_input("Enter a folder path to scan:", key="1")
 folder_path_2 = st.text_input("Enter a folder path to scan:", key="2")
 
-if st.button("Select Documents Folder"):
+if st.button("Select Documents Folder(relative path)"):
     rag1 = RAG.RAG(folder_path_1)
     rag2 = RAG.RAG(folder_path_2)
     st.write(f"Folder Selected: {folder_path_1}, {folder_path_2}")
@@ -108,7 +108,7 @@ st.write("請在下面的輸入框中輸入您的問題")
 # 輸入框：用戶問題
 user_input = st.text_input("Your question:")
 # 文件上傳
-uploaded_file = st.file_uploader("Or upload a file:", type=["txt", "csv", "pdf"])
+uploaded_file = st.file_uploader("Or upload a file as your question:", type=["txt", "csv", "pdf"])
 
 # 提交按鈕
 if st.button("Generate Response"):

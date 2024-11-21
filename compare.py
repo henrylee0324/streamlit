@@ -20,7 +20,23 @@ def compare_responses(question, response1, response2):
     3. Key similarities between the responses.
     4. Specific examples or phrases that highlight these differences and similarities.
     5. A summarized conclusion highlighting which response is more complete or better aligned with the question.
-    Provide your analysis in a clear and structured format.
+    Provide your analysis in a clear and **structured format** like this:
+
+    Analysis:
+    - How well each response addresses the question:
+        * Response 1: [Analysis of Response 1]
+        * Response 2: [Analysis of Response 2]
+    - Key differences:
+        1. [Difference 1]
+        2. [Difference 2]
+    - Key similarities:
+        1. [Similarity 1]
+        2. [Similarity 2]
+    - Examples or phrases:
+        * Response 1: "[Example]"
+        * Response 2: "[Example]"
+    - Conclusion:
+        [Your conclusion on which response is better and why]
     """
 
     # Create the comparison prompt with the question and responses
@@ -46,7 +62,9 @@ def compare_responses(question, response1, response2):
         ]
     )
 
-    return completion.choices[0].message.content
+    # Extract and return the structured output
+    structured_output = completion.choices[0].message.content
+    return structured_output
 
 if __name__ == "__main__":
     # Example question and responses
